@@ -81,7 +81,7 @@ The AI panel supports `@` mentions — users type `@PageName` to attach other pa
 ## Commands
 
 ```bash
-npm run dev          # Start Next.js dev server on localhost:3000
+npm run dev          # Start Next.js dev server on localhost:3100
 npm run dev:terminal # Start terminal WebSocket server on localhost:3001
 npm run dev:all      # Start both servers
 npm run debug:chrome # Launch Chrome with CDP on localhost:9222 for frontend debugging
@@ -91,7 +91,7 @@ npm run lint         # ESLint
 
 ## Frontend Debugging
 
-Use `npm run debug:chrome` when you need a debuggable browser session. It launches Chrome or Chromium with `--remote-debugging-port=9222`, opens Cabinet at `http://localhost:3000` by default, and prints the DevTools endpoints:
+Use `npm run debug:chrome` when you need a debuggable browser session. It launches Chrome or Chromium with `--remote-debugging-port=9222`, opens Cabinet at `http://localhost:3100` by default, and prints the DevTools endpoints:
 
 - `http://127.0.0.1:9222/json/version`
 - `http://127.0.0.1:9222/json/list`

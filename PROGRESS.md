@@ -1,5 +1,7 @@
 # Progress
 
+[2026-04-09] Changed Cabinet dev server port from 3000 to 3100 to avoid conflict with Bodega One's backend. Updated package.json dev script (`next dev --port 3100`), runtime-config.ts default, launch-chrome-debug.sh default URL, and CLAUDE.md docs.
+
 [2026-04-09] Added `export const dynamic = "force-dynamic"` to all `/api/system/*` route handlers. Without this, Next.js could cache these routes during production builds, potentially serving stale update check results and triggering a false "update available" popup on fresh installs.
 
 [2026-04-09] Added Apple Developer certificate import step to release workflow for proper codesigning and notarization in CI. Deduplicated getNvmNodeBin() in cabinet-daemon.ts to use the shared nvm-path.ts utility.

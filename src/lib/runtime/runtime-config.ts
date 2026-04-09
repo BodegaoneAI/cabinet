@@ -55,7 +55,7 @@ export function getManagedDataDir(): string {
 }
 
 export function getAppPort(): number {
-  return parsePort(process.env.CABINET_APP_PORT || process.env.PORT, 3000);
+  return parsePort(process.env.CABINET_APP_PORT || process.env.PORT, 3100);
 }
 
 export function getDaemonPort(): number {
