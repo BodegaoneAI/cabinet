@@ -1,5 +1,7 @@
 # Progress
 
+[2026-04-10] Cherry-picked localStorage try/catch fix (92be5ca from claude/elated-leakey) onto main and pushed to origin. Build verified clean. This lands the Electron webview SecurityError fix for Joe's blank screen in Bodega One's in-app browser.
+
 [2026-04-10] Fixed blank screen in Bodega One in-app webview: wrapped localStorage calls in `lib/themes.ts` (`getStoredThemeName`, `storeThemeName`) with try/catch to handle SecurityError thrown in Electron webview contexts. Also installed missing `tw-animate-css` package in worktree node_modules.
 
 [2026-04-10] Added all 7 sidebar icon types to the example workspace: Posts Editor (full-screen .app with carousel slide previews, placeholder images, prompts, and platform/status filters), Brand Kit (embedded website without .app — Globe icon), media-kit.pdf (PDF — FileType icon). Updated .gitignore to track the renamed example directory and agent library templates.
