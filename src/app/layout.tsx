@@ -41,10 +41,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Force dark class before first paint to prevent flash of light theme.
-            Also detects Electron desktop context. Runs synchronously in <head>
-            so it takes effect before any CSS is applied. */}
-        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add("dark");if(window.CabinetDesktop)document.documentElement.classList.add("electron-desktop");` }} />
+        <script dangerouslySetInnerHTML={{ __html: `if(window.CabinetDesktop)document.documentElement.classList.add("electron-desktop")` }} />
       </head>
       <body className="min-h-full flex flex-col font-sans">
         <ThemeProvider

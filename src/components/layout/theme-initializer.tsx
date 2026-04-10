@@ -2,19 +2,23 @@
 
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
-import { THEMES, applyTheme, storeThemeName } from "@/lib/themes";
+import {
+  THEMES,
+  applyTheme,
+  getStoredThemeName,
+  storeThemeName,
+} from "@/lib/themes";
 
 /**
- * Mounts once at the app root to apply the Bodega One dark theme.
+ * Mounts once at the app root to apply the correct custom theme CSS vars.
  *
- * NOTE: localStorage is intentionally bypassed for this release.
- * The "cabinet-theme" key may contain a stale value from before the
- * Bodega One fork (e.g. "paper"). Instead of trying to migrate stale
- * values we always boot to "bodega-one" and write it to localStorage
- * so the theme picker reflects the correct active theme.
+ * Reads the user's saved choice from localStorage ("cabinet-theme-v2").
+ * Falls back to THEMES[0] (Bodega One) when no value is stored — this
+ * covers first-time loads and users migrating from older installs whose
+ * stale "cabinet-theme" key is ignored by the versioned key change.
  *
- * localStorage persistence for user theme choices can be re-enabled
- * once the theme picker is confirmed working in the Electron webview.
+ * applyTheme() handles both the CSS variable injection AND the dark/light
+ * class toggle, keeping next-themes in sync via setTheme().
  */
 export function ThemeInitializer() {
   const { setTheme } = useTheme();
@@ -30,12 +34,15 @@ export function ThemeInitializer() {
       document.head.appendChild(link);
     }
 
-    // Always apply Bodega One — localStorage is bypassed this release
-    const themeDef = THEMES.find((t) => t.name === "bodega-one") ?? THEMES[0];
+    // Read user's stored choice; fall back to the first theme (Bodega One)
+    const stored = getStoredThemeName();
+    const themeDef =
+      (stored ? THEMES.find((t) => t.name === stored) : null) ?? THEMES[0];
+
     if (themeDef) {
-      applyTheme(themeDef);
-      setTheme(themeDef.type); // keeps next-themes in sync ("dark")
-      storeThemeName(themeDef.name); // write so theme picker shows correct selection
+      applyTheme(themeDef);           // sets CSS vars + toggles dark/light class
+      setTheme(themeDef.type);        // keeps next-themes in sync
+      storeThemeName(themeDef.name);  // persist (writes default if nothing stored)
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -568,11 +568,16 @@ export function applyTheme(theme: ThemeDefinition | null) {
   root.setAttribute("data-custom-theme", theme.name);
 }
 
+// Versioned key — v2 forces a clean migration from any stale pre-fork value
+// (e.g. "paper" written by earlier Cabinet installs). Old "cabinet-theme" key
+// is never read; new picks write to "cabinet-theme-v2" going forward.
+const THEME_STORAGE_KEY = "cabinet-theme-v2";
+
 // Get the stored theme name from localStorage
 export function getStoredThemeName(): string | null {
   if (typeof window === "undefined") return null;
   try {
-    return localStorage.getItem("cabinet-theme");
+    return localStorage.getItem(THEME_STORAGE_KEY);
   } catch {
     return null;
   }
@@ -583,9 +588,9 @@ export function storeThemeName(name: string | null) {
   if (typeof window === "undefined") return;
   try {
     if (name) {
-      localStorage.setItem("cabinet-theme", name);
+      localStorage.setItem(THEME_STORAGE_KEY, name);
     } else {
-      localStorage.removeItem("cabinet-theme");
+      localStorage.removeItem(THEME_STORAGE_KEY);
     }
   } catch {
     // localStorage may be unavailable in restricted webview contexts

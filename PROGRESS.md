@@ -87,3 +87,5 @@
 [2026-04-10] Fixed stale localStorage theme override: ThemeInitializer now validates stored theme name against THEMES array before applying — unknown/old values (e.g. "paper" from before fork) are replaced with "bodega-one". Also fixed settings-page.tsx fallback from "paper" to "bodega-one" so the theme picker highlights the correct active theme.
 
 [2026-04-10] Force bodega-one dark theme on every load — bypass localStorage entirely in ThemeInitializer (stale "paper" values in Electron webview had no DevTools escape). Add synchronous dark-class script in <head> to prevent flash of light theme before React hydrates. Drop ThemeProvider enableSystem and change defaultTheme from "light" to "dark".
+
+[2026-04-10] Proper theme migration: bump localStorage key from "cabinet-theme" to "cabinet-theme-v2" in themes.ts so stale pre-fork values ("paper") are silently ignored. Restore ThemeInitializer to read the versioned key and fall back to THEMES[0] (bodega-one). Remove hacky classList.add("dark") inline script from layout.tsx — next-themes handles dark-class FOUC natively with defaultTheme="dark".
