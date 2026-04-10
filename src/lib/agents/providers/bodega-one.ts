@@ -114,8 +114,8 @@ function parseSseChunk(payload: string): { chunk?: string; done?: boolean; conte
 class BodegaOneProvider implements AgentProvider {
   readonly id = "bodega-one";
   readonly name = "Bodega One";
-  /** Hybrid: "cli" lets Cabinet use the PTY shim; API path is still supported. */
-  readonly type = "cli" as const;
+  /** API provider: Cabinet calls streamPrompt/runPrompt directly over HTTP. */
+  readonly type = "api" as const;
   readonly icon = "zap";
 
   private baseUrl: string;

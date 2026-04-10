@@ -1,5 +1,7 @@
 # Progress
 
+[2026-04-10] Fixed "fetch failed" error when sending messages in Cabinet's AI panel. Root causes: (1) BodegaOneProvider was registered as type "cli" (PTY/bridge path) instead of "api", causing the daemon to try spawning a subprocess instead of calling Bodega One's HTTP API directly — changed to type "api" so `streamPrompt` is used directly. (2) Default provider was hardcoded to "claude-code" instead of "bodega-one" — changed registry default. (3) npm dev script used `&` (sequential on Windows cmd.exe) preventing the daemon from starting alongside Next.js — replaced with `concurrently` across dev/start scripts. (4) Improved daemon-client error message to clearly tell Joe when the daemon is not running.
+
 [2026-04-10] Cherry-picked localStorage try/catch fix (92be5ca from claude/elated-leakey) onto main and pushed to origin. Build verified clean. This lands the Electron webview SecurityError fix for Joe's blank screen in Bodega One's in-app browser.
 
 [2026-04-10] Fixed blank screen in Bodega One in-app webview: wrapped localStorage calls in `lib/themes.ts` (`getStoredThemeName`, `storeThemeName`) with try/catch to handle SecurityError thrown in Electron webview contexts. Also installed missing `tw-animate-css` package in worktree node_modules.

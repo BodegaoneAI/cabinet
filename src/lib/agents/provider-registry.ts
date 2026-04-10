@@ -5,7 +5,7 @@ import { bodegaOneProvider } from "./providers/bodega-one";
 
 class ProviderRegistryImpl implements ProviderRegistry {
   providers = new Map<string, AgentProvider>();
-  defaultProvider = "claude-code";
+  defaultProvider = "bodega-one";
 
   register(provider: AgentProvider): void {
     this.providers.set(provider.id, provider);

@@ -13,10 +13,17 @@ async function daemonFetch(path: string, init?: RequestInit): Promise<Response> 
   const headers = new Headers(init?.headers);
   headers.set("Authorization", `Bearer ${token}`);
 
-  return fetch(`${getDaemonUrl()}${path}`, {
-    ...init,
-    headers,
-  });
+  try {
+    return await fetch(`${getDaemonUrl()}${path}`, {
+      ...init,
+      headers,
+    });
+  } catch (err) {
+    const raw = err instanceof Error ? err.message : String(err);
+    throw new Error(
+      `Cabinet daemon is not reachable at ${getDaemonUrl()} — make sure the daemon is running (npm run dev:daemon). Original error: ${raw}`
+    );
+  }
 }
 
 export async function createDaemonSession(
