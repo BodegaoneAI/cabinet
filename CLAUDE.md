@@ -15,7 +15,7 @@ Cabinet is an AI-first self-hosted knowledge base and startup OS. All content li
 - **Fonts:** Inter (sans) + JetBrains Mono (code)
 - **Icons:** Lucide (no emoji in system chrome)
 - **Markdown:** gray-matter (frontmatter), unified/remark (MD→HTML), turndown (HTML→MD)
-- **AI:** Claude CLI headless mode (`claude -p`) for page editing
+- **AI:** Bodega One API provider for agent sessions and page editing
 
 ## Architecture
 
@@ -38,7 +38,6 @@ src/
   components/tasks/          → Kanban board
   components/agents/         → Agent dashboard
   components/jobs/           → Jobs manager UI
-  components/terminal/       → xterm.js web terminal
   components/search/         → Cmd+K search dialog
   components/layout/         → App shell, header
   lib/storage/               → Filesystem ops (path-utils, page-io, tree-builder, task-io)
@@ -47,7 +46,7 @@ src/
   lib/agents/                → Agent session manager
   lib/jobs/                  → Job scheduler (node-cron)
 server/
-  terminal-server.ts         → Standalone WebSocket server for PTY sessions
+  cabinet-daemon.ts          → Background server: cron scheduler + WebSocket event bus
 data/                        → Content directory (KB pages, tasks, jobs)
 ```
 
@@ -81,9 +80,7 @@ The AI panel supports `@` mentions — users type `@PageName` to attach other pa
 ## Commands
 
 ```bash
-npm run dev          # Start Next.js dev server on localhost:3000
-npm run dev:terminal # Start terminal WebSocket server on localhost:3001
-npm run dev:all      # Start both servers
+npm run dev          # Start Next.js + cabinet daemon on localhost:3100
 npm run debug:chrome # Launch Chrome with CDP on localhost:9222 for frontend debugging
 npm run build        # Production build
 npm run lint         # ESLint

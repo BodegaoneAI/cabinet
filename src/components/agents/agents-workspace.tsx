@@ -32,7 +32,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WebTerminal } from "@/components/terminal/web-terminal";
 import { ConversationResultView } from "@/components/agents/conversation-result-view";
 import { cronToHuman } from "@/lib/agents/cron-utils";
 import { SchedulePicker } from "@/components/mission-control/schedule-picker";
@@ -130,7 +129,7 @@ const DEFAULT_NEW_AGENT: NewAgentDraft = {
   emoji: "🤖",
   role: "",
   heartbeat: "0 */4 * * *",
-  provider: "claude-code",
+  provider: "bodega-one",
   department: "general",
   type: "specialist",
   workspace: "workspace",
@@ -362,7 +361,7 @@ function TriggerIcon({
   return <HeartPulse className={cn("h-3 w-3", className)} />;
 }
 
-function blankJobDraft(agentSlug: string, provider = "claude-code"): JobConfig {
+function blankJobDraft(agentSlug: string, provider = "bodega-one"): JobConfig {
   const now = new Date().toISOString();
   return {
     id: "",
@@ -400,7 +399,7 @@ export function AgentsWorkspace({
   const [settingsBody, setSettingsBody] = useState("");
   const [settingsJobs, setSettingsJobs] = useState<JobConfig[]>([]);
   const [providers, setProviders] = useState<ProviderInfo[]>([]);
-  const [defaultProvider, setDefaultProvider] = useState("claude-code");
+  const [defaultProvider, setDefaultProvider] = useState("bodega-one");
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [jobDraft, setJobDraft] = useState<JobConfig | null>(null);
   const [triggerFilter, setTriggerFilter] = useState<TriggerFilter>("all");
@@ -467,8 +466,8 @@ export function AgentsWorkspace({
       ? cliProviders
       : [
           {
-            id: defaultProvider || "claude-code",
-            name: defaultProvider || "claude-code",
+            id: defaultProvider || "bodega-one",
+            name: defaultProvider || "bodega-one",
             type: "cli",
             enabled: true,
             available: true,
@@ -481,7 +480,7 @@ export function AgentsWorkspace({
       if (!response.ok) return;
       const data = await response.json();
       setProviders((data.providers || []) as ProviderInfo[]);
-      setDefaultProvider(data.defaultProvider || "claude-code");
+      setDefaultProvider(data.defaultProvider || "bodega-one");
     } catch {
       // Ignore transient startup/network failures.
     }
@@ -1101,7 +1100,7 @@ export function AgentsWorkspace({
     setJobDraft(
       blankJobDraft(
         settingsAgentSlug,
-        settingsPersona?.provider || defaultProvider || "claude-code"
+        settingsPersona?.provider || defaultProvider || "bodega-one"
       )
     );
     setNewJobDialogOpen(true);
@@ -1117,7 +1116,7 @@ export function AgentsWorkspace({
     setJobDraft({
       ...blankJobDraft(
         settingsAgentSlug,
-        settingsPersona?.provider || defaultProvider || "claude-code"
+        settingsPersona?.provider || defaultProvider || "bodega-one"
       ),
       id: template.id,
       name: template.name,
@@ -2034,15 +2033,9 @@ export function AgentsWorkspace({
             </div>
             <div className="flex-1 overflow-hidden">
               {selectedConversationMeta.status === "running" ? (
-                <WebTerminal
-                  sessionId={selectedConversationMeta.id}
-                  displayPrompt={selectedConversationMeta.title}
-                  reconnect
-                  themeSurface="page"
-                  onClose={() => {
-                    void refreshConversations();
-                  }}
-                />
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  Session running…
+                </div>
               ) : selectedConversation ? (
                 <ConversationResultView
                   detail={selectedConversation}

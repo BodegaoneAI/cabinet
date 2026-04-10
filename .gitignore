@@ -44,10 +44,6 @@ next-env.d.ts
 # data: keep only the shipped templates, agent library, and guidance tracked
 data/**
 !data/
-!data/getting-started/
-!data/getting-started/**
-!data/example-cabinet-carousel-factory/
-!data/example-cabinet-carousel-factory/**
 !data/.agents/
 !data/.agents/.library/
 !data/.agents/.library/**

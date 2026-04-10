@@ -1,6 +1,4 @@
 import type { AgentProvider, ProviderRegistry } from "./provider-interface";
-import { claudeCodeProvider } from "./providers/claude-code";
-import { codexCliProvider } from "./providers/codex-cli";
 import { bodegaOneProvider } from "./providers/bodega-one";
 
 class ProviderRegistryImpl implements ProviderRegistry {
@@ -38,11 +36,4 @@ class ProviderRegistryImpl implements ProviderRegistry {
 export const providerRegistry = new ProviderRegistryImpl();
 
 // Register built-in providers
-providerRegistry.register(claudeCodeProvider);
-providerRegistry.register(codexCliProvider);
-
 providerRegistry.register(bodegaOneProvider);
-
-// Future providers will be registered here:
-// providerRegistry.register(geminiCliProvider);
-// providerRegistry.register(anthropicApiProvider);

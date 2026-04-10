@@ -55,7 +55,7 @@ export function normalizeJobConfig(
     provider:
       typeof input.provider === "string" && input.provider.trim()
         ? input.provider.trim()
-        : "claude-code",
+        : "bodega-one",
     agentSlug:
       typeof agentSlug === "string" && agentSlug.trim()
         ? agentSlug.trim()

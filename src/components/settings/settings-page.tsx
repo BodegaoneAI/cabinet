@@ -16,15 +16,12 @@ import {
   Save,
   Loader2,
   Clock,
-  CloudDownload,
   Palette,
   Check,
   Info,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { UpdateSummary } from "@/components/system/update-summary";
-import { useCabinetUpdate } from "@/hooks/use-cabinet-update";
 import { useTheme } from "next-themes";
 import {
   THEMES,
@@ -60,14 +57,14 @@ interface IntegrationConfig {
   };
 }
 
-type Tab = "providers" | "integrations" | "notifications" | "appearance" | "updates" | "about";
+type Tab = "providers" | "integrations" | "notifications" | "appearance" | "about";
 
 export function SettingsPage() {
   const [providers, setProviders] = useState<ProviderInfo[]>([]);
   const [defaultProvider, setDefaultProvider] = useState("");
   const [loading, setLoading] = useState(true);
   const [savingProviders, setSavingProviders] = useState(false);
-  const VALID_TABS: Tab[] = ["providers", "integrations", "notifications", "appearance", "updates", "about"];
+  const VALID_TABS: Tab[] = ["providers", "integrations", "notifications", "appearance", "about"];
   const initialTab = (() => {
     const slug = useAppStore.getState().section.slug as Tab | undefined;
     return slug && VALID_TABS.includes(slug) ? slug : "providers";
@@ -107,20 +104,6 @@ export function SettingsPage() {
   const [revealedKeys, setRevealedKeys] = useState<Set<string>>(new Set());
   const [activeThemeName, setActiveThemeName] = useState<string | null>(null);
   const { setTheme: setNextTheme } = useTheme();
-  const {
-    update,
-    loading: updateLoading,
-    refreshing: updateRefreshing,
-    applyPending,
-    backupPending,
-    backupPath,
-    actionError,
-    refresh: refreshUpdate,
-    createBackup,
-    openDataDir,
-    applyUpdate,
-  } = useCabinetUpdate();
-
   // Sync active theme name on mount
   useEffect(() => {
     setActiveThemeName(getStoredThemeName() || "bodega-one");
@@ -303,7 +286,6 @@ export function SettingsPage() {
     { id: "integrations", label: "Integrations", icon: <Plug className="h-3.5 w-3.5" /> },
     { id: "notifications", label: "Notifications", icon: <Bell className="h-3.5 w-3.5" /> },
     { id: "appearance", label: "Appearance", icon: <Palette className="h-3.5 w-3.5" /> },
-    { id: "updates", label: "Updates", icon: <CloudDownload className="h-3.5 w-3.5" /> },
     { id: "about", label: "About", icon: <Info className="h-3.5 w-3.5" /> },
   ];
 
@@ -436,30 +418,6 @@ export function SettingsPage() {
                 </div>
               </div>
             </div>
-          )}
-
-          {tab === "updates" && update && (
-            <UpdateSummary
-              update={update}
-              loading={updateLoading}
-              refreshing={updateRefreshing}
-              applyPending={applyPending}
-              backupPending={backupPending}
-              backupPath={backupPath}
-              actionError={actionError}
-              onRefresh={() => {
-                void refreshUpdate();
-              }}
-              onApply={applyUpdate}
-              onCreateBackup={async () => {
-                await createBackup("data");
-              }}
-              onOpenDataDir={openDataDir}
-            />
-          )}
-
-          {tab === "updates" && !update && updateLoading && (
-            <p className="text-[13px] text-muted-foreground">Checking for Cabinet updates...</p>
           )}
 
           {/* Providers Tab */}
