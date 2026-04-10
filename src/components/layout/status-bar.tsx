@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { GitBranch, RefreshCw, Check, Star } from "lucide-react";
+import { GitBranch, RefreshCw, Check, CloudDownload, Star } from "lucide-react";
 import { useEditorStore } from "@/stores/editor-store";
 import { useTreeStore } from "@/stores/tree-store";
 
