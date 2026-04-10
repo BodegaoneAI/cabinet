@@ -131,44 +131,9 @@ export function AIPanel() {
     (s) => s.pagePath !== currentPath && s.status === "running"
   );
 
-  // Restore sessions from sessionStorage on mount and validate against terminal server
+  // Restore sessions from sessionStorage on mount
   useEffect(() => {
-    const restore = async () => {
-      useAIPanelStore.getState().restoreSessionsFromStorage();
-
-      // Check which restored sessions are still alive on the terminal server
-      try {
-        const res = await fetch("/api/daemon/sessions");
-        if (res.ok) {
-          const serverSessions: { id: string; exited: boolean }[] = await res.json();
-          const aliveIds = new Set(serverSessions.filter((s) => !s.exited).map((s) => s.id));
-          const exitedIds = new Set(serverSessions.filter((s) => s.exited).map((s) => s.id));
-
-          const state = useAIPanelStore.getState();
-          for (const session of state.editorSessions) {
-            if (session.status === "running" && session.reconnect) {
-              if (exitedIds.has(session.sessionId)) {
-                // Process finished while we were away — mark completed
-                state.markSessionCompleted(session.sessionId);
-              } else if (!aliveIds.has(session.sessionId)) {
-                // Session no longer exists on server at all — remove it
-                state.removeSession(session.sessionId);
-              }
-              // If alive, it stays as reconnect=true and the WebTerminal will reconnect
-            }
-          }
-        }
-      } catch {
-        // Terminal server not reachable — clear all reconnect sessions
-        const state = useAIPanelStore.getState();
-        for (const session of state.editorSessions) {
-          if (session.reconnect) {
-            state.removeSession(session.sessionId);
-          }
-        }
-      }
-    };
-    restore();
+    useAIPanelStore.getState().restoreSessionsFromStorage();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load pages for @ mentions
