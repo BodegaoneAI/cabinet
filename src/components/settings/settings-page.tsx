@@ -589,31 +589,52 @@ export function SettingsPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <h4 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
-                        API Agents
-                      </h4>
-                      <div className="space-y-2">
-                        {[
-                          { name: "Anthropic API", env: "ANTHROPIC_API_KEY", status: "Coming soon" },
-                          { name: "OpenAI API", env: "OPENAI_API_KEY", status: "Coming soon" },
-                          { name: "Google AI API", env: "GOOGLE_AI_API_KEY", status: "Coming soon" },
-                        ].map((p) => (
-                          <div
-                            key={p.name}
-                            className="flex items-center justify-between bg-card border border-border rounded-lg p-3 opacity-50"
-                          >
-                            <div className="flex items-center gap-3">
-                              <XCircle className="h-4 w-4 text-muted-foreground" />
-                              <div>
-                                <p className="text-[13px] font-medium">{p.name}</p>
-                                <p className="text-[11px] text-muted-foreground">{p.status}</p>
+                    {providers.filter((p) => p.type === "api").length > 0 && (
+                      <div>
+                        <h4 className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
+                          API Agents
+                        </h4>
+                        <div className="space-y-2">
+                          {providers
+                            .filter((p) => p.type === "api")
+                            .map((provider) => (
+                              <div
+                                key={provider.id}
+                                className="flex items-center justify-between bg-card border border-border rounded-lg p-3"
+                              >
+                                <div className="flex items-center gap-3">
+                                  {provider.available ? (
+                                    <CheckCircle className="h-4 w-4 text-green-500" />
+                                  ) : (
+                                    <XCircle className="h-4 w-4 text-muted-foreground" />
+                                  )}
+                                  <div>
+                                    <p className="text-[13px] font-medium">{provider.name}</p>
+                                    <p className="text-[11px] text-muted-foreground">
+                                      {provider.available ? provider.version || "Ready" : provider.error || "Not available"}
+                                    </p>
+                                    {(provider.usage?.totalCount ?? 0) > 0 && (
+                                      <p className="text-[11px] text-muted-foreground">
+                                        In use by {describeProviderUsage(provider)}
+                                      </p>
+                                    )}
+                                  </div>
+                                </div>
+                                <span className={cn(
+                                  "text-[10px] px-2 py-0.5 rounded-full font-medium",
+                                  provider.id === defaultProvider
+                                    ? "bg-primary/10 text-primary"
+                                    : provider.available
+                                      ? "bg-emerald-500/10 text-emerald-500"
+                                      : "bg-muted text-muted-foreground"
+                                )}>
+                                  {provider.id === defaultProvider ? "Default" : provider.available ? "Available" : "Unavailable"}
+                                </span>
                               </div>
-                            </div>
-                          </div>
-                        ))}
+                            ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 )}
               </div>

@@ -12,6 +12,48 @@ export interface ThemeDefinition {
 }
 
 export const THEMES: ThemeDefinition[] = [
+  // ─── BODEGA ONE THEME (default) ───
+  {
+    name: "bodega-one",
+    label: "Bodega One",
+    type: "dark",
+    accent: "#8b5cf6",
+    vars: {
+      "--background": "oklch(0.145 0 0)",
+      "--foreground": "oklch(0.91 0.01 290)",
+      "--card": "oklch(0.175 0.005 290)",
+      "--card-foreground": "oklch(0.91 0.01 290)",
+      "--popover": "oklch(0.175 0.005 290)",
+      "--popover-foreground": "oklch(0.91 0.01 290)",
+      "--primary": "oklch(0.50 0.27 285)",
+      "--primary-foreground": "oklch(1 0 0)",
+      "--secondary": "oklch(0.21 0.005 290)",
+      "--secondary-foreground": "oklch(0.70 0.02 290)",
+      "--muted": "oklch(0.21 0.005 290)",
+      "--muted-foreground": "oklch(0.52 0.02 290)",
+      "--accent": "oklch(0.50 0.27 285)",
+      "--accent-foreground": "oklch(1 0 0)",
+      "--destructive": "oklch(0.704 0.191 22.216)",
+      "--destructive-foreground": "oklch(1 0 0)",
+      "--border": "oklch(0.27 0.005 290)",
+      "--input": "oklch(0.27 0.005 290)",
+      "--ring": "oklch(0.50 0.27 285)",
+      "--chart-1": "oklch(0.50 0.27 285)",
+      "--chart-2": "oklch(0.56 0.22 265)",
+      "--chart-3": "oklch(0.62 0.17 245)",
+      "--chart-4": "oklch(0.68 0.12 225)",
+      "--chart-5": "oklch(0.74 0.08 205)",
+      "--sidebar": "oklch(0.16 0.005 290)",
+      "--sidebar-foreground": "oklch(0.91 0.01 290)",
+      "--sidebar-primary": "oklch(0.50 0.27 285)",
+      "--sidebar-primary-foreground": "oklch(1 0 0)",
+      "--sidebar-accent": "oklch(0.21 0.005 290)",
+      "--sidebar-accent-foreground": "oklch(0.91 0.01 290)",
+      "--sidebar-border": "oklch(0.19 0.005 290)",
+      "--sidebar-ring": "oklch(0.50 0.27 285)",
+    },
+  },
+
   // ─── CLAUDE THEME (signature) ───
   {
     name: "claude",

@@ -81,3 +81,5 @@
 [2026-04-10] Added notification sounds for task completion/failure toasts. Uses Web Audio API to synthesize tones — ascending chime for success, descending tone for failure. No audio files needed.
 
 [2026-04-10] Merged upstream hilash/cabinet v0.2.11 (22 commits) into Bodega One fork. Brought in: home screen, sidebar overhaul, 24 agent library personas, toast notifications, multi-theme system (themes.ts), macOS codesigning, Carousel Factory example data, and hash-based URL routing. Fixed proxy.ts export name from `middleware` to `proxy` per Next.js 16.2.1 convention — caught during post-merge build. All Bodega One customizations preserved (purple dark theme, BodegaOneProvider v2, daemon, proxy.ts, extensions link fix).
+
+[2026-04-10] Fixed providers settings UI to display Bodega One (API type) — the API Agents section was hardcoded with placeholder entries instead of rendering from fetched provider state. Also fixed dark theme default: added "bodega-one" to THEMES array (matching the .dark CSS block's oklch-285 purple palette) and changed ThemeInitializer default from "paper" to "bodega-one".

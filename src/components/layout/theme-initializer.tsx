@@ -28,9 +28,9 @@ export function ThemeInitializer() {
       document.head.appendChild(link);
     }
 
-    // Restore or default to Paper/Cabinet theme
+    // Restore or default to Bodega One dark theme
     const stored = getStoredThemeName();
-    const themeName = stored || "paper";
+    const themeName = stored || "bodega-one";
     const themeDef = THEMES.find((t) => t.name === themeName);
     if (themeDef) {
       applyTheme(themeDef);
