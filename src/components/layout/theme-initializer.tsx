@@ -2,17 +2,19 @@
 
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
-import {
-  THEMES,
-  applyTheme,
-  getStoredThemeName,
-  storeThemeName,
-} from "@/lib/themes";
+import { THEMES, applyTheme, storeThemeName } from "@/lib/themes";
 
 /**
- * Mounts once at the app root to ensure the custom theme CSS vars
- * are applied before any UI renders. This prevents flashes of the
- * wrong theme when navigating between panels.
+ * Mounts once at the app root to apply the Bodega One dark theme.
+ *
+ * NOTE: localStorage is intentionally bypassed for this release.
+ * The "cabinet-theme" key may contain a stale value from before the
+ * Bodega One fork (e.g. "paper"). Instead of trying to migrate stale
+ * values we always boot to "bodega-one" and write it to localStorage
+ * so the theme picker reflects the correct active theme.
+ *
+ * localStorage persistence for user theme choices can be re-enabled
+ * once the theme picker is confirmed working in the Electron webview.
  */
 export function ThemeInitializer() {
   const { setTheme } = useTheme();
@@ -28,15 +30,12 @@ export function ThemeInitializer() {
       document.head.appendChild(link);
     }
 
-    // Restore or default to Bodega One dark theme
-    // If stored theme doesn't exist in THEMES (stale/old value), reset to bodega-one
-    const stored = getStoredThemeName();
-    const storedDef = stored ? THEMES.find((t) => t.name === stored) : null;
-    const themeDef = storedDef ?? THEMES.find((t) => t.name === "bodega-one") ?? THEMES[0];
+    // Always apply Bodega One — localStorage is bypassed this release
+    const themeDef = THEMES.find((t) => t.name === "bodega-one") ?? THEMES[0];
     if (themeDef) {
       applyTheme(themeDef);
-      setTheme(themeDef.type);
-      storeThemeName(themeDef.name);
+      setTheme(themeDef.type); // keeps next-themes in sync ("dark")
+      storeThemeName(themeDef.name); // write so theme picker shows correct selection
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

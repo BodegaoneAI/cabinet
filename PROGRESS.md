@@ -85,3 +85,5 @@
 [2026-04-10] Fixed providers settings UI to display Bodega One (API type) — the API Agents section was hardcoded with placeholder entries instead of rendering from fetched provider state. Also fixed dark theme default: added "bodega-one" to THEMES array (matching the .dark CSS block's oklch-285 purple palette) and changed ThemeInitializer default from "paper" to "bodega-one".
 
 [2026-04-10] Fixed stale localStorage theme override: ThemeInitializer now validates stored theme name against THEMES array before applying — unknown/old values (e.g. "paper" from before fork) are replaced with "bodega-one". Also fixed settings-page.tsx fallback from "paper" to "bodega-one" so the theme picker highlights the correct active theme.
+
+[2026-04-10] Force bodega-one dark theme on every load — bypass localStorage entirely in ThemeInitializer (stale "paper" values in Electron webview had no DevTools escape). Add synchronous dark-class script in <head> to prevent flash of light theme before React hydrates. Drop ThemeProvider enableSystem and change defaultTheme from "light" to "dark".
