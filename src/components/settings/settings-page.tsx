@@ -123,7 +123,7 @@ export function SettingsPage() {
 
   // Sync active theme name on mount
   useEffect(() => {
-    setActiveThemeName(getStoredThemeName() || "paper");
+    setActiveThemeName(getStoredThemeName() || "bodega-one");
   }, []);
 
   const selectTheme = (themeDef: ThemeDefinition) => {

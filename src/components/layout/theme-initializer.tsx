@@ -29,15 +29,14 @@ export function ThemeInitializer() {
     }
 
     // Restore or default to Bodega One dark theme
+    // If stored theme doesn't exist in THEMES (stale/old value), reset to bodega-one
     const stored = getStoredThemeName();
-    const themeName = stored || "bodega-one";
-    const themeDef = THEMES.find((t) => t.name === themeName);
+    const storedDef = stored ? THEMES.find((t) => t.name === stored) : null;
+    const themeDef = storedDef ?? THEMES.find((t) => t.name === "bodega-one") ?? THEMES[0];
     if (themeDef) {
       applyTheme(themeDef);
       setTheme(themeDef.type);
-      if (!stored) {
-        storeThemeName(themeName);
-      }
+      storeThemeName(themeDef.name);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
