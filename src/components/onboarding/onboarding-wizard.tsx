@@ -165,23 +165,13 @@ function CommunityCardTile({ card }: { card: CommunityCard }) {
 
 /* ─── Keyword → agent pre-check mapping ─── */
 const KEYWORD_CHECKS: [RegExp, string[]][] = [
-  [/content|blog|social|market|brand|newsletter/, ["content-marketer", "social-media", "copywriter"]],
-  [/seo|search|rank|keyword|organic|google/, ["seo"]],
-  [/sales|lead|outreach|revenue|pipeline|deal/, ["sales", "customer-success"]],
   [/quality|review|proofread|test|audit/, ["qa"]],
   [/tech|code|engineer|dev|infra|deploy/, ["cto", "devops"]],
   [/product|feature|roadmap|user research/, ["product-manager"]],
-  [/design|ux|wireframe|prototype/, ["ux-designer"]],
-  [/data|analytics|metrics|dashboard/, ["data-analyst"]],
-  [/finance|budget|runway|fundraise/, ["cfo"]],
-  [/growth|funnel|acquisition|conversion/, ["growth-marketer"]],
   [/research|competitive|market analysis/, ["researcher"]],
-  [/legal|compliance|contract|privacy/, ["legal"]],
-  [/hiring|culture|hr|onboarding|team health/, ["people-ops"]],
-  [/operations|process|efficiency/, ["coo"]],
 ];
 
-const ALWAYS_CHECKED = new Set(["ceo", "editor"]);
+const ALWAYS_CHECKED = new Set(["editor"]);
 
 const DEPARTMENT_ORDER: [string, string][] = [
   ["leadership", "Leadership"],
@@ -340,9 +330,9 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
         }))
       );
     } catch {
-      // Fallback: at least offer CEO + Editor
+      // Fallback: at least offer core dev agents
       setSuggestedAgents([
-        { slug: "ceo", name: "CEO Agent", emoji: "\u{1F3AF}", role: "Strategic planning, goal tracking, task delegation", checked: true },
+        { slug: "cto", name: "CTO Agent", emoji: "\u{1F527}", role: "Architecture, code review, technical decisions", checked: true },
         { slug: "editor", name: "Editor", emoji: "\u{1F4DD}", role: "KB content, documentation, formatting", checked: true },
       ]);
     } finally {

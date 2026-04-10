@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  serverExternalPackages: ["node-pty", "simple-git", "better-sqlite3"],
+  serverExternalPackages: ["simple-git", "better-sqlite3"],
   outputFileTracingExcludes: {
     "/*": [
       ".next/dev/**/*",
