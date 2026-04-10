@@ -32,6 +32,8 @@
 
 [2026-04-10] Added Connect section to the About settings tab with Discord link (recommended) and email (hi@runcabinet.com).
 
+[2026-04-10] Post-gut cleanup: deleted server/terminal-server.ts (node-pty dependency), removed node-pty from next.config.ts serverExternalPackages, replaced postinstall.js with a no-op, trimmed unused Lucide imports in tree-view.tsx, cleaned stale persona slugs from onboarding-wizard.tsx, removed deleted data dirs from .gitignore, and updated CLAUDE.md to reflect current tech stack and commands.
+
 [2026-04-10] Phase 2 gut: stripped Cabinet down to a lean agent workspace for embedding in Bodega One. Removed: CLI providers (claude-code, codex-cli), PTY terminal server from daemon, xterm web-terminal components, standalone API routes (system/backup, system/update, daemon/sessions), 18 marketing/exec agent personas, example content directories, UpdateDialog and Cabinet-specific update hook, and all Electron/xterm/node-pty dependencies from package.json. Kept: bodega-one API provider, cron scheduler, WebSocket event bus, agent dashboard, knowledge base, and dev-focused personas (cto, devops, qa, editor, researcher, product-manager). TypeScript builds clean.
 
 [2026-04-10] Added default White and Black themes (neutral, no accent color) to the appearance tab. Reduced blur on coming-soon overlays from 3px to 2px with higher opacity.
