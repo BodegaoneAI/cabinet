@@ -80,7 +80,7 @@ function blankJobDraft(agentSlug: string): JobConfig {
     name: "",
     enabled: true,
     schedule: "0 9 * * 1-5",
-    provider: "claude-code",
+    provider: "bodega-one",
     agentSlug,
     prompt: "",
     timeout: 600,

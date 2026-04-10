@@ -43,9 +43,9 @@ export function CreateAgentDialog({ open, onOpenChange, onCreated }: CreateAgent
   const [department, setDepartment] = useState("general");
   const [type, setType] = useState<"specialist" | "lead">("specialist");
   const [heartbeat, setHeartbeat] = useState("0 */4 * * *");
-  const [provider, setProvider] = useState("claude-code");
+  const [provider, setProvider] = useState("bodega-one");
   const [providers, setProviders] = useState<ProviderInfo[]>([]);
-  const [defaultProvider, setDefaultProvider] = useState("claude-code");
+  const [defaultProvider, setDefaultProvider] = useState("bodega-one");
   const [goals, setGoals] = useState<GoalInput[]>([]);
   const [creating, setCreating] = useState(false);
 
@@ -56,7 +56,7 @@ export function CreateAgentDialog({ open, onOpenChange, onCreated }: CreateAgent
       .then((r) => r.json())
       .then((data) => {
         setProviders((data.providers || []).filter((entry: ProviderInfo) => entry.type === "cli" && entry.enabled));
-        const nextDefault = data.defaultProvider || "claude-code";
+        const nextDefault = data.defaultProvider || "bodega-one";
         setDefaultProvider(nextDefault);
         setProvider(nextDefault);
       })

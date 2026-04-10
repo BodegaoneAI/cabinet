@@ -46,9 +46,9 @@ export function EditAgentDialog({ open, onOpenChange, slug, onSaved }: EditAgent
   const [department, setDepartment] = useState("general");
   const [type, setType] = useState<"specialist" | "lead">("specialist");
   const [heartbeat, setHeartbeat] = useState("0 */4 * * *");
-  const [provider, setProvider] = useState("claude-code");
+  const [provider, setProvider] = useState("bodega-one");
   const [providers, setProviders] = useState<ProviderInfo[]>([]);
-  const [defaultProvider, setDefaultProvider] = useState("claude-code");
+  const [defaultProvider, setDefaultProvider] = useState("bodega-one");
   const [goals, setGoals] = useState<GoalInput[]>([]);
   const [channels, setChannels] = useState<string[]>([]);
   const [body, setBody] = useState("");
@@ -66,7 +66,7 @@ export function EditAgentDialog({ open, onOpenChange, slug, onSaved }: EditAgent
       .then((r) => r.json())
       .then((data) => {
         setProviders((data.providers || []).filter((entry: ProviderInfo) => entry.type === "cli" && entry.enabled));
-        setDefaultProvider(data.defaultProvider || "claude-code");
+        setDefaultProvider(data.defaultProvider || "bodega-one");
       })
       .catch(() => {});
 

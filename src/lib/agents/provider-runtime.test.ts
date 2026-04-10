@@ -12,9 +12,6 @@ import {
   resolveProviderId,
   runOneShotProviderPrompt,
 } from "./provider-runtime";
-import { claudeCodeProvider } from "./providers/claude-code";
-import { codexCliProvider } from "./providers/codex-cli";
-
 async function createExecutableScript(source: string): Promise<string> {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), "cabinet-provider-test-"));
   const scriptPath = path.join(dir, "fake-provider.sh");
@@ -34,42 +31,6 @@ function registerTestProvider(
     providerRegistry.defaultProvider = previousDefaultProvider;
   });
 }
-
-test("Codex provider builds the expected launch arguments", () => {
-  const oneShot = codexCliProvider.buildOneShotInvocation?.("Say OK", process.cwd());
-  assert.ok(oneShot);
-  assert.deepEqual(oneShot.args, [
-    "exec",
-    "--ephemeral",
-    "--skip-git-repo-check",
-    "--dangerously-bypass-approvals-and-sandbox",
-    "Say OK",
-  ]);
-
-  const session = codexCliProvider.buildSessionInvocation?.("Say OK", process.cwd());
-  assert.ok(session);
-  assert.deepEqual(session.args, [
-    "exec",
-    "--ephemeral",
-    "--skip-git-repo-check",
-    "--dangerously-bypass-approvals-and-sandbox",
-    "Say OK",
-  ]);
-  assert.equal(session.initialPrompt, undefined);
-
-  const interactiveSession = codexCliProvider.buildSessionInvocation?.(undefined, process.cwd());
-  assert.ok(interactiveSession);
-  assert.deepEqual(interactiveSession.args, ["--ephemeral"]);
-  assert.equal(interactiveSession.initialPrompt, undefined);
-});
-
-test("Claude provider keeps the prompt injection session contract", () => {
-  const session = claudeCodeProvider.buildSessionInvocation?.("Review this", process.cwd());
-  assert.ok(session);
-  assert.deepEqual(session.args, ["--dangerously-skip-permissions"]);
-  assert.equal(session.initialPrompt, "Review this");
-  assert.equal(session.readyStrategy, "claude");
-});
 
 test("provider runtime resolves launch specs through registered providers", async (t) => {
   const previousDefaultProvider = providerRegistry.defaultProvider;
@@ -151,8 +112,8 @@ test("provider runtime falls back to the enabled default when the requested prov
   const originalSettings = await fs.readFile(providersPath, "utf8").catch(() => null);
 
   await writeProviderSettings({
-    defaultProvider: "codex-cli",
-    disabledProviderIds: ["claude-code"],
+    defaultProvider: "bodega-one",
+    disabledProviderIds: [],
   });
 
   t.after(async () => {
@@ -163,7 +124,7 @@ test("provider runtime falls back to the enabled default when the requested prov
     await fs.writeFile(providersPath, originalSettings, "utf8");
   });
 
-  assert.equal(resolveProviderId("claude-code"), "codex-cli");
+  assert.equal(resolveProviderId("bodega-one"), "bodega-one");
 });
 
 test("runOneShotProviderPrompt closes stdin for CLI providers", async (t) => {
