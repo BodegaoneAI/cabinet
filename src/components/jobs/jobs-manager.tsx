@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WebTerminal } from "@/components/terminal/web-terminal";
 import { ConversationResultView } from "@/components/agents/conversation-result-view";
 import { cronToHuman } from "@/lib/agents/cron-utils";
 import { useTreeStore } from "@/stores/tree-store";
@@ -593,15 +592,9 @@ export function JobsManager() {
             </div>
             <div className="flex-1 overflow-hidden">
               {selectedConversationMeta.status === "running" ? (
-                <WebTerminal
-                  sessionId={selectedConversationMeta.id}
-                  displayPrompt={selectedConversationMeta.title}
-                  reconnect
-                  themeSurface="page"
-                  onClose={() => {
-                    void refreshConversations();
-                  }}
-                />
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  Session running…
+                </div>
               ) : selectedConversation ? (
                 <ConversationResultView
                   detail={selectedConversation}

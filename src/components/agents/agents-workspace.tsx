@@ -32,7 +32,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WebTerminal } from "@/components/terminal/web-terminal";
 import { ConversationResultView } from "@/components/agents/conversation-result-view";
 import { cronToHuman } from "@/lib/agents/cron-utils";
 import { SchedulePicker } from "@/components/mission-control/schedule-picker";
@@ -2034,15 +2033,9 @@ export function AgentsWorkspace({
             </div>
             <div className="flex-1 overflow-hidden">
               {selectedConversationMeta.status === "running" ? (
-                <WebTerminal
-                  sessionId={selectedConversationMeta.id}
-                  displayPrompt={selectedConversationMeta.title}
-                  reconnect
-                  themeSurface="page"
-                  onClose={() => {
-                    void refreshConversations();
-                  }}
-                />
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  Session running…
+                </div>
               ) : selectedConversation ? (
                 <ConversationResultView
                   detail={selectedConversation}

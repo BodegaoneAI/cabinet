@@ -23,7 +23,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppStore } from "@/stores/app-store";
-import { WebTerminal } from "@/components/terminal/web-terminal";
 import { cn } from "@/lib/utils";
 import type { AgentPersona, HeartbeatRecord } from "@/lib/agents/persona-manager";
 import { cronToHuman } from "@/lib/agents/cron-utils";
@@ -689,14 +688,8 @@ function SessionsTab({
               <Loader2 className="h-3.5 w-3.5 text-primary animate-spin" />
               <span className="text-[12px] font-medium">{liveSession.userMessage}</span>
             </div>
-            <div className="flex-1 min-h-0">
-              <WebTerminal
-                sessionId={liveSession.id}
-                prompt={liveSession.prompt}
-                themeSurface="page"
-                providerId={liveSession.providerId}
-                onClose={handleSessionEnd}
-              />
+            <div className="flex-1 min-h-0 flex items-center justify-center text-sm text-muted-foreground">
+              Session running…
             </div>
           </div>
         ) : selectedSession ? (

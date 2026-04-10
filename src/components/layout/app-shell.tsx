@@ -11,7 +11,6 @@ import { HomeScreen } from "@/components/home/home-screen";
 import { AgentsWorkspace } from "@/components/agents/agents-workspace";
 import { JobsManager } from "@/components/jobs/jobs-manager";
 import { SettingsPage } from "@/components/settings/settings-page";
-import { TerminalTabs } from "@/components/terminal/terminal-tabs";
 import { AIPanel } from "@/components/ai-panel/ai-panel";
 import { SearchDialog } from "@/components/search/search-dialog";
 import { KeyboardShortcuts } from "@/components/shortcuts/keyboard-shortcuts";
@@ -44,7 +43,6 @@ export function AppShell() {
   const selectedPath = useTreeStore((s) => s.selectedPath);
   const section = useAppStore((s) => s.section);
   const setSection = useAppStore((s) => s.setSection);
-  const terminalOpen = useAppStore((s) => s.terminalOpen);
   const sidebarCollapsed = useAppStore((s) => s.sidebarCollapsed);
   const setSidebarCollapsed = useAppStore((s) => s.setSidebarCollapsed);
   const setAiPanelCollapsed = useAppStore((s) => s.setAiPanelCollapsed);
@@ -255,7 +253,6 @@ export function AppShell() {
         <main className="flex-1 flex flex-col overflow-hidden">
           {renderContent()}
         </main>
-        {terminalOpen && <TerminalTabs />}
         <StatusBar />
       </div>
       {!aiPanelCollapsed && <AIPanel />}

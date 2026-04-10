@@ -16,7 +16,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { WebTerminal } from "@/components/terminal/web-terminal";
 import {
   useAIPanelStore,
   type AgentLiveSession,
@@ -285,33 +284,14 @@ export function AgentLivePanel({ persona, onBack }: AgentLivePanelProps) {
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <div className="flex-1 min-h-[200px] overflow-hidden rounded-lg border border-border/70 bg-background">
-                <WebTerminal
-                  sessionId={session.sessionId}
-                  reconnect={session.reconnect ?? true}
-                  themeSurface="page"
-                  onClose={() => handleSessionEnd(session.sessionId)}
-                />
+              <div className="flex-1 min-h-[200px] overflow-hidden rounded-lg border border-border/70 bg-background flex items-center justify-center text-sm text-muted-foreground">
+                Session running…
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Hidden terminals for other running agent sessions — keep WS alive */}
-      {otherRunningSessions.map((session) => (
-        <div
-          key={`hidden-${session.sessionId}`}
-          style={{ width: 0, height: 0, overflow: "hidden", position: "absolute" }}
-        >
-          <WebTerminal
-            sessionId={session.sessionId}
-            reconnect={true}
-            themeSurface="page"
-            onClose={() => markAgentSessionCompleted(session.sessionId)}
-          />
-        </div>
-      ))}
 
       {/* Bottom bar */}
       <div className="border-t border-border p-3 shrink-0 flex items-center gap-2">
