@@ -41,7 +41,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `if(window.CabinetDesktop)document.documentElement.classList.add("electron-desktop")` }} />
+        <script dangerouslySetInnerHTML={{ __html: `if(window.CabinetDesktop)document.documentElement.classList.add("electron-desktop");if(window.isCabinetEmbedded)document.documentElement.classList.add("bodega-embedded")` }} />
       </head>
       <body className="min-h-full flex flex-col font-sans">
         <ThemeProvider

@@ -513,3 +513,11 @@ html[data-custom-theme] .font-logo,
 .electron-desktop .sidebar-header {
   padding-left: 80px;
 }
+
+/* Bodega One embedded mode: no drag region, hide standalone nav chrome */
+.bodega-embedded header {
+  -webkit-app-region: no-drag;
+}
+.bodega-embedded .standalone-only {
+  display: none;
+}
